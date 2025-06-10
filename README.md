@@ -1,2 +1,2 @@
 # MultiResourceSharing
-A Fullstack project used to upload and download the file
+A Fullstack project using springboot used to upload and download the files
