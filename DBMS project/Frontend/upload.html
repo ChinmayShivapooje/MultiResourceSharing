@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload File</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="form-container">
+    <h2>Upload a File</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="text" name="department" placeholder="Department" required>
+      <input type="file" name="file" required>
+      <button type="submit">Upload</button>
+      <a href="view.html">Back to View</a>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData();
+      formData.append("u", new Blob([JSON.stringify({
+        name: form.name.value,
+        email: form.email.value,
+        department: form.department.value
+      })], { type: "application/json" }));
+      formData.append("m", form.file.files[0]);
+
+      const res = await fetch("http://localhost:8080/api/upload/add", {
+        method: "POST",
+        body: formData
+      });
+
+      if (res.ok) {
+        alert("Upload successful!");
+        window.location.href = "view.html";
+      } else {
+        alert("Upload failed!");
+      }
+    });
+  </script>
+</body>
+</html>
